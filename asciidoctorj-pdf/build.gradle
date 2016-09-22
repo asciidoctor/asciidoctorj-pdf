@@ -1,0 +1,42 @@
+dependencies {
+  compile "org.asciidoctor:asciidoctorj:$asciidoctorJVersion"
+
+  testRuntime "org.jruby:jruby-complete:$jrubyVersion"
+
+  //provided "org.jruby:jruby-complete:$jrubyVersion"
+
+  gems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
+    // Exclude gems provided by AsciidoctorJ core
+    exclude module: 'asciidoctor'
+    exclude module: 'thread_safe'
+  }
+  gems "rubygems:rouge:$rougeGemVersion"
+
+  testCompile "org.apache.pdfbox:pdfbox:$pdfboxVersion"
+
+
+}
+
+def gemFiles = fileTree(jruby.gemInstallDir) {
+  include 'specifications/*.gemspec'
+  include 'gems/*/lib/**'
+  include "gems/*/data/fonts/**"
+  include "gems/asciidoctor-pdf-$asciidoctorPdfGemVersion/data/**"
+  // Accomodate Prawn's non-conforming packaging
+  include "gems/prawn-*/VERSION"
+  include "gems/prawn-*/data/*.txt"
+  include "gems/prawn-*/data/encodings/*"
+  // Include icon fonts
+  include "gems/prawn-icon-*/fonts/*/*"
+  // Include required data file from the addressable gem
+  include "gems/addressable-*/data/*.data"
+
+  exclude 'gems/rouge-*/lib/rouge/demos/**'
+}
+
+jrubyPrepare << {
+  copy { // bundles the gems inside this artifact
+    from gemFiles
+    into sourceSets.main.output.resourcesDir
+  }
+}

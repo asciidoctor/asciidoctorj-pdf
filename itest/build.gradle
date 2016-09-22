@@ -1,0 +1,16 @@
+dependencies {
+
+  testCompile "org.asciidoctor:asciidoctorj:$asciidoctorJVersion"
+
+  testRuntime project(':asciidoctorj-pdf')
+  testRuntime 'org.asciidoctor:asciidoctorj-diagram:1.5.0'
+}
+
+jar.enabled = false
+if ( !project.hasProperty('skip.signing') ) {
+  signPom.enabled = false
+}
+
+configurations.all {
+  artifacts.clear()
+}
