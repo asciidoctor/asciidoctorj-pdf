@@ -80,9 +80,7 @@ afterEvaluate {
                 asNode().children().last() + projectMeta
             }
 
-            if (!project.isDistribution()) {
-                from components.java
-            }
+            from components.java
         }
     }
 }
