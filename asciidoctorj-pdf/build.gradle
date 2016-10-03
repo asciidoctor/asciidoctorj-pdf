@@ -40,3 +40,10 @@ jrubyPrepare << {
     into sourceSets.main.output.resourcesDir
   }
 }
+test {
+  // Uncomment to see where JRuby loads gems from
+  //systemProperty 'jruby.debug.loadService', 'true'
+  testLogging {
+    showStandardStreams = true
+  }
+}
