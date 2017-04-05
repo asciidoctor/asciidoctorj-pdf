@@ -17,7 +17,7 @@ ifdef::env-github[:badges:]
 ifdef::awestruct[:uri-docs: link:/docs]
 ifndef::awestruct[:uri-docs: http://asciidoctor.org/docs]
 :uri-asciidoctor: {uri-docs}/what-is-asciidoctor
-:uri-asciidoctor: https://github.com/asciidoctor/asciidoctorj
+:uri-asciidoctorj: https://github.com/asciidoctor/asciidoctorj
 :uri-repo: https://github.com/asciidoctor/asciidoctorj-pdf
 :uri-issues: {uri-repo}/issues
 :uri-discuss: http://discuss.asciidoctor.org
@@ -35,8 +35,7 @@ ifndef::awestruct[:uri-docs: http://asciidoctor.org/docs]
 :uri-font-awesome: http://fortawesome.github.io/Font-Awesome
 :uri-gradle: https://gradle.org
 
-{uri-repo}[AsciidoctorJ-PDF] is the official library for converting AsciiDoc documents to PDF with {uri-asciidoctorj}[AsciidoctorJ] on the JVM.
-Using AsciidoctorJ, you can convert AsciiDoc content or analyze the structure of a parsed AsciiDoc document from Java and other JVM languages.
+{uri-repo}[AsciidoctorJ PDF] is a convenient repackaging of Asciidoctor PDF for use with {uri-asciidoctorj}[AsciidoctorJ], which brings the Asciidoctor ecosystem to the JVM.
 
 // TODO: Fix URLs for badges once CI is configured
 ifdef::badges[]
