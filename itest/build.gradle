@@ -1,9 +1,11 @@
 dependencies {
 
-  testCompile "org.asciidoctor:asciidoctorj:$asciidoctorJVersion"
+  testCompile ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
+    exclude group:'org.jruby'
+  }
 
   testRuntime project(':asciidoctorj-pdf')
-  testRuntime 'org.asciidoctor:asciidoctorj-diagram:1.5.0'
+  testRuntime 'org.asciidoctor:asciidoctorj-diagram:1.5.4'
 }
 
 jar.enabled = false
