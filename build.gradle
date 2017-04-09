@@ -72,8 +72,6 @@ subprojects {
   }
   if (statusIsRelease) {
     apply from: rootProject.file('gradle/deploy.gradle')
-  } else if (it.version.endsWith('SNAPSHOT')) {
-    apply from: rootProject.file('gradle/deploySnapshot.gradle')
   }
 
   status = _status
