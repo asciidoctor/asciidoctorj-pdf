@@ -48,7 +48,7 @@ ext {
   addressableVersion = '2.4.0'
   public_suffixVersion = '1.4.6'
   prawnGemVersion='2.2.2'
-  rougeGemVersion = '2.0.7'
+  rougeGemVersion = '3.0.0'
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
   ttfunkGemVersion = '1.2.2'
