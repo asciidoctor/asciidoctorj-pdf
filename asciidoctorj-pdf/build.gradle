@@ -1,9 +1,9 @@
 dependencies {
-  compile ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
+  testCompile ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
     exclude group:'org.jruby'
   }
 
-  compile "org.jruby:jruby-complete:$jrubyVersion"
+  testCompile "org.jruby:jruby-complete:$jrubyVersion"
 
 
   gems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
