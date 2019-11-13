@@ -1,0 +1,3 @@
+:hyphens:
+
+This story chronicles the inexplicable hazards and vicious beasts a team must conquer and vanquish on the journey to discover the true power of Open Source.

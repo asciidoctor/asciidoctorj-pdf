@@ -6,7 +6,7 @@ dependencies {
   testCompile "org.jruby:jruby-complete:$jrubyVersion"
 
 
-  gems("rubygems:asciidoctor-pdf:1.5.0.beta.7") {
+  gems("rubygems:asciidoctor-pdf:1.5.0.beta.8") {
     // Exclude gems provided by AsciidoctorJ core
     exclude module: 'asciidoctor'
     exclude module: 'thread_safe'
@@ -21,6 +21,7 @@ dependencies {
   gems "rubygems:rouge:$rougeGemVersion"
   gems "rubygems:addressable:$addressableVersion"
   gems "rubygems:public_suffix:$public_suffixVersion"
+  gems "rubygems:text-hyphen:$textHyphenVersion"
 
   testCompile "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
