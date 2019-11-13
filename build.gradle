@@ -122,6 +122,7 @@ subprojects {
     }
 
     testLogging {
+      exceptionFormat = 'full'
       // events 'passed', 'failed', 'skipped', 'standard_out', 'standard_error'
       // events 'standard_out', 'standard_error'
       afterSuite { desc, result ->
