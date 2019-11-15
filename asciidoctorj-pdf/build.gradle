@@ -29,6 +29,7 @@ def gemFiles = fileTree(jruby.gemInstallDir) {
   include 'specifications/*.gemspec'
   include 'gems/*/lib/**'
   include "gems/*/data/fonts/**"
+  include "gems/*/data/themes/**"
   include "gems/asciidoctor-pdf-$asciidoctorPdfGemVersion/data/**"
   // Accomodate Prawn's non-conforming packaging
   include "gems/prawn-*/VERSION"
