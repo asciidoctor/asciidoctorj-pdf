@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static org.asciidoctor.OptionsBuilder.options;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -34,6 +35,7 @@ public class WhenBackendIsPdf {
         String filename = "image-sample";
         File inputFile = new File("build/resources/test/" + filename + ".adoc");
         File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
+        removeFileIfItExists(outputFile1);
 
         asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
 
@@ -42,8 +44,6 @@ public class WhenBackendIsPdf {
         imageProcessor.parse(outputFile1.getAbsolutePath());
         List images = imageProcessor.getImages();
         assertThat(images.size(), is(2));
-
-        outputFile1.delete();
     }
 
     @Test
@@ -51,12 +51,13 @@ public class WhenBackendIsPdf {
         String filename = "code-sample";
         File inputFile = new File("build/resources/test/" + filename + ".adoc");
         File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
+        removeFileIfItExists(outputFile1);
 
         asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
 
         assertThat(outputFile1.exists(), is(true));
 
-        ColorsProcessor colorsProcessor = new ColorsProcessor("program", "System.out.println", "printHello", "HelloWorld", "<body>", "else", "Math.sqrt" );
+        ColorsProcessor colorsProcessor = new ColorsProcessor("program", "System.out.println", "printHello", "HelloWorld", "<body>", "else", "Math.sqrt");
         colorsProcessor.parse(outputFile1.getAbsolutePath());
         Map<String, List<Color>> colors = colorsProcessor.getColors();
         assertThat(colors.get("program").get(0), equalTo(RougeColors.GREY));
@@ -66,8 +67,48 @@ public class WhenBackendIsPdf {
         assertThat(colors.get("<body>").get(0), equalTo(RougeColors.PINK));
         assertThat(colors.get("else").get(0), equalTo(RougeColors.GREEN));
         assertThat(colors.get("Math.sqrt").get(0), equalTo(RougeColors.LIGHT_BLUE));
+    }
 
-        outputFile1.delete();
+    @Test
+    public void pdf_text_should_be_hyphenated_german() throws IOException {
+        String filename = "hyphenation-de-sample";
+        File inputFile = new File("build/resources/test/" + filename + ".adoc");
+        File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
+        removeFileIfItExists(outputFile1);
+
+        asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
+
+        assertThat(outputFile1.exists(), is(true));
+
+        ColorsProcessor colorsProcessor = new ColorsProcessor("Feh\u00adler");
+        colorsProcessor.parse(outputFile1.getAbsolutePath());
+        Map<String, List<Color>> words = colorsProcessor.getColors();
+        assertThat(words.keySet(), hasItem("Feh\u00adler"));
+    }
+
+    @Test
+    public void pdf_text_should_be_hyphenated_english() throws IOException {
+        String filename = "hyphenation-en-sample";
+        File inputFile = new File("build/resources/test/" + filename + ".adoc");
+        File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
+        removeFileIfItExists(outputFile1);
+
+        asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
+
+        assertThat(outputFile1.exists(), is(true));
+
+        ColorsProcessor colorsProcessor = new ColorsProcessor("van\u00adquish");
+        colorsProcessor.parse(outputFile1.getAbsolutePath());
+        Map<String, List<Color>> words = colorsProcessor.getColors();
+        assertThat(words.keySet(), hasItem("van\u00adquish"));
+    }
+
+    private void removeFileIfItExists(File file) throws IOException {
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new IOException("can't delete file");
+            }
+        }
     }
 
 }

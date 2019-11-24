@@ -1,0 +1,5 @@
+:hyphens: DE
+
+Mitwirkende sind immer willkommen.
+Neue Mitwirkende sind immer willkommen!
+Wenn Sie Fehler oder Auslassungen im Quellcode, in der Dokumentation oder im Inhalt der Website entdecken, zögern Sie bitte nicht, ein Problem zu melden oder eine Pull Request mit einem Fix zu öffnen.
