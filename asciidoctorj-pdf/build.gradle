@@ -18,6 +18,7 @@ dependencies {
   gems "rubygems:thread_safe:$threadSafeGemVersion"
   
   gems "rubygems:prawn:$prawnGemVersion"
+  gems "rubygems:rghost:$rghostGemVersion"
   gems "rubygems:rouge:$rougeGemVersion"
   gems "rubygems:addressable:$addressableVersion"
   gems "rubygems:public_suffix:$public_suffixVersion"
