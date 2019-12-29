@@ -17,17 +17,13 @@ jobs:
       matrix:
         java:
           - '1.8'
-          - '1.7'
-          # Disable Java11 because Gradle doesn't run with it...
-          #- '11'
+          - '11.0.5'
         os:
           - ubuntu-latest
           - macos-latest
         exclude:
           - os: macos-latest
             java: '1.8'
-          - os: macos-latest
-            java: '1.7'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
