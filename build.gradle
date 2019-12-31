@@ -9,14 +9,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
     }
 }
 
 // modern plugins config
 plugins {
-  id 'com.github.jruby-gradle.base' version '1.4.0'
+  id 'com.github.jruby-gradle.base' version '2.0.0-alpha.7'
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version
@@ -143,14 +143,7 @@ configure(subprojects.findAll {it.name != 'itest'}) {
   apply plugin: 'com.github.jruby-gradle.base'
 
   repositories {
-    maven {
-      name 'rubygems-release'
-      url 'http://rubygems-proxy.torquebox.org/releases'
-    }
-    maven {
-      name 'rubygems-prerelease'
-      url 'http://rubygems-proxy.torquebox.org/prereleases'
-    }
+    ruby.gems()
   }
 
   if (JavaVersion.current().isJava8Compatible()) {
@@ -159,15 +152,26 @@ configure(subprojects.findAll {it.name != 'itest'}) {
       options.addStringOption('Xdoclint:none', '-quiet')
     }
   }
+
+  ext {
+    // path to use for the prepared jruby gems
+    preparedGems = new File("$buildDir/preparedGems")
+  }
+
+  sourceSets {
+    main {
+      //let's register an output folder on the main SourceSet:
+      output.dir(preparedGems, builtBy: 'jrubyPrepare')
+      //it is now a part of the 'main' classpath and will be a part of the jar
+    }
+  }
+
 }
 
 configure(subprojects.findAll { it.name != 'itest'}) {
 
   jruby {
-    defaultRepositories = false
-    defaultVersion = jrubyVersion
-    execVersion = jrubyVersion
-    // TODO I'd like to be able to customize the name of the gemInstallDir
+    jrubyVersion = jrubyVersion
   }
 
   // QUESTION is this the right place to insert this task dependency in the lifecycle?
