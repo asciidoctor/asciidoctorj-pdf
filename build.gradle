@@ -52,7 +52,7 @@ ext {
   rougeGemVersion = '3.13.0'
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
-  ttfunkGemVersion = '1.2.2'
+  ttfunkGemVersion = '1.5.1'
   textHyphenVersion='1.4.1'
 }
 

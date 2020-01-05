@@ -14,6 +14,7 @@ dependencies {
     exclude module: 'prawn'
     exclude module: 'addressable'
     exclude module: 'public_suffix'
+    exclude module: 'ttfunk'
   }
   gems "rubygems:thread_safe:$threadSafeGemVersion"
   
@@ -23,6 +24,7 @@ dependencies {
   gems "rubygems:addressable:$addressableVersion"
   gems "rubygems:public_suffix:$public_suffixVersion"
   gems "rubygems:text-hyphen:$textHyphenVersion"
+  gems "rubygems:ttfunk:$ttfunkGemVersion"
 
   testCompile "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
