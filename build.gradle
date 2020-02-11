@@ -16,7 +16,7 @@ buildscript {
 
 // modern plugins config
 plugins {
-  id 'com.github.jruby-gradle.base' version '2.0.0-alpha.7'
+  id 'com.github.jruby-gradle.base' version '2.0.0'
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version

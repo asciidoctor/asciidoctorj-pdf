@@ -6,7 +6,7 @@ dependencies {
   testCompile "org.jruby:jruby-complete:$jrubyVersion"
 
 
-  gems("rubygems:asciidoctor-pdf:1.5.0.rc.3") {
+  gems("rubygems:asciidoctor-pdf:1.5.0") {
     // Exclude gems provided by AsciidoctorJ core
     exclude module: 'asciidoctor'
     exclude module: 'thread_safe'
