@@ -37,9 +37,7 @@ ifndef::awestruct[:uri-docs: http://asciidoctor.org/docs]
 
 {uri-repo}[AsciidoctorJ PDF] is a convenient repackaging of Asciidoctor PDF for use with {uri-asciidoctorj}[AsciidoctorJ], which brings the Asciidoctor ecosystem to the JVM.
 
-// TODO: Fix URLs for badges once CI is configured
 ifdef::badges[]
-image:https://img.shields.io/travis/asciidoctor/asciidoctorj/master.svg[Build Status (Travis CI), link=https://travis-ci.org/asciidoctor/asciidoctorj-pdf]
 image:https://github.com/asciidoctor/asciidoctorj-pdf/workflows/Build%20Master/badge.svg?event=push[Build Status (Github Actions)]
 endif::[]
 
