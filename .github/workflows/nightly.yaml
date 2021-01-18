@@ -1,11 +1,9 @@
-name: Build Master
+name: Nightly Build
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  # keep this separate from regular build, as GitHub will disable scheduled builds after 30 days
+  # without a change (and won't enable them automatically, for example on pushed changes or pull requests)
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
