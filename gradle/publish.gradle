@@ -17,10 +17,10 @@ def projectMeta = {
     }
     issueManagement {
         system 'github'
-        url 'https://github.com/asciidoctor/asciidoctorj/issues'
+        url 'https://github.com/asciidoctor/asciidoctorj-pdf/issues'
     }
     scm {
-        url 'https://github.com/asciidoctor/asciidoctorj'
+        url 'https://github.com/asciidoctor/asciidoctorj-pdf'
     }
     developers {
         developer {
