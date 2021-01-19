@@ -1,4 +1,4 @@
-Thank you for opening a pull request and contributing to AsciidoctorJ!
+Thank you for opening a pull request and contributing to AsciidoctorJ PDF!
 
 Please take a bit of time giving some details about your pull request:
 
