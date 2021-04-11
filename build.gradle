@@ -38,7 +38,7 @@ ext {
   junitVersion = '4.12'
   saxonVersion = '9.5.1-6'
   xmlMatchersVersion = '1.0-RC1'
-  pdfboxVersion = '1.8.10'
+  pdfboxVersion = '1.8.16'
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '1.5.8.1'
