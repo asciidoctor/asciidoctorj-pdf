@@ -1,9 +1,13 @@
-name: Nightly Build
+name: Upstream Build
 on:
-  # keep this separate from upstream build, as GitHub will disable scheduled builds after 30 days
+  # keep this separate from nightly build, as GitHub will disable scheduled builds after 30 days
   # without a change (and won't enable them automatically, for example on pushed changes or pull requests)
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -18,3 +22,5 @@ jobs:
       - name: Upstream Build
         run: |
           ./test-asciidoctor-upstream.sh
+
+
