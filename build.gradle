@@ -43,6 +43,7 @@ ext {
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '1.5.8.1'
   asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : project(':asciidoctorj-pdf').version.replace('-', '.')
+
   groovyVersion = '2.1.8'
 
   addressableVersion = '2.4.0'

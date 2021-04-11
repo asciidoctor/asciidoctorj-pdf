@@ -33,8 +33,8 @@ jobs:
           ./gradlew -S -Pskip.signing assemble
           ./gradlew -S -Pskip.signing check
       - name: Upstream Build
-        if: matrix.os == 'ubuntu-latest' && matrix.java == '8'
+        if: matrix.os == 'ubuntu-latest' && matrix.java == '1.8'
         run: |
-          test-asciidoctor-upstream.sh
+          ./test-asciidoctor-upstream.sh
 
 
