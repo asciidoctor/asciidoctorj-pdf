@@ -24,10 +24,14 @@ cd ${SRC_DIR_PDF}
 ASCIIDOCTOR_PDF_VERSION=$(grep 'VERSION' ./lib/asciidoctor/pdf/version.rb | sed "s/.*'\(.*\)'.*/\1/")
 sed "s;<version></version>;<version>$ASCIIDOCTOR_PDF_VERSION</version>;" pom.xml > pom.xml.sedtmp && mv -f pom.xml.sedtmp pom.xml
 sed "s;^ *s\.files *.*$;s.files = Dir['*.gemspec', '*.adoc', '{bin,data,lib}/*', '{bin,data,lib}/**/*'];" asciidoctor-pdf.gemspec > asciidoctor-pdf.gemspec.sedtmp && mv -f asciidoctor-pdf.gemspec.sedtmp asciidoctor-pdf.gemspec
-mvn install -B -X -Dgemspec=asciidoctor-pdf.gemspec
+mvn install -B -Dgemspec=asciidoctor-pdf.gemspec
 cd ../..
 #rm -rf build/maven-pdf
 cd ..
 
-$GRADLE_CMD -S -Pskip.signing -PasciidoctorGemVersion=${ASCIIDOCTOR_VERSION} -PasciidoctorPdfGemVersion=${ASCIIDOCTOR_PDF_VERSION} -PuseMavenLocal=true :asciidoctorj-pdf:clean :asciidoctorj-pdf:check
+$GRADLE_CMD -S -Pskip.signing -PasciidoctorJVersion=${ASCIIDOCTORJ_VERSION:-2.4.3} \
+                              -PasciidoctorPdfGemVersion=${ASCIIDOCTOR_PDF_VERSION} \
+                              -PprawnGemVersion=${PRAWN_VERSION:-2.4.0} \
+                              -PuseMavenLocal=true \
+                              :asciidoctorj-pdf:clean :asciidoctorj-pdf:check
 exit $?
