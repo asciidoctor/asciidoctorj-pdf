@@ -22,7 +22,7 @@ unzip -q ${SRC_DIR_PDF}.zip
 cp ../../asciidoctor-pdf-gem-installer.pom ${SRC_DIR_PDF}/pom.xml
 cd ${SRC_DIR_PDF}
 ASCIIDOCTOR_PDF_VERSION=$(grep 'VERSION' ./lib/asciidoctor/pdf/version.rb | sed "s/.*'\(.*\)'.*/\1/")
-sed "s;<version></version>;<version>$ASCIIDOCTOR_PDF_VERSION</version>;" pom.xml > pom.xml.sedtmp && mv -f pom.xml.sedtmp pom.xml
+sed "s;<version></version>;<version>$ASCIIDOCTOR_PDF_VERSION-SNAPSHOT</version>;" pom.xml > pom.xml.sedtmp && mv -f pom.xml.sedtmp pom.xml
 sed "s;^ *s\.files *.*$;s.files = Dir['*.gemspec', '*.adoc', '{bin,data,lib}/*', '{bin,data,lib}/**/*'];" asciidoctor-pdf.gemspec > asciidoctor-pdf.gemspec.sedtmp && mv -f asciidoctor-pdf.gemspec.sedtmp asciidoctor-pdf.gemspec
 mvn install -B -Dgemspec=asciidoctor-pdf.gemspec
 cd ../..
@@ -30,7 +30,7 @@ cd ../..
 cd ..
 
 $GRADLE_CMD -S -Pskip.signing -PasciidoctorJVersion=${ASCIIDOCTORJ_VERSION:-2.4.3} \
-                              -PasciidoctorPdfGemVersion=${ASCIIDOCTOR_PDF_VERSION} \
+                              -PasciidoctorPdfGemVersion=${ASCIIDOCTOR_PDF_VERSION}-SNAPSHOT \
                               -PprawnGemVersion=${PRAWN_VERSION:-2.4.0} \
                               -PuseMavenLocal=true \
                               :asciidoctorj-pdf:clean :asciidoctorj-pdf:check
