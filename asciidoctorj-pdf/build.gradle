@@ -40,7 +40,7 @@ def gemFiles = fileTree("${project.buildDir}/.gems") {
   include "gems/prawn-*/data/*.txt"
   include "gems/prawn-*/data/encodings/*"
   // Include icon fonts
-  include "gems/prawn-icon-*/fonts/*/*"
+  include "gems/prawn-icon-*/data/fonts/**"
   // Include required data file from the addressable gem
   include "gems/addressable-*/data/*.data"
 
