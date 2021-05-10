@@ -4,8 +4,9 @@ dependencies {
     exclude group:'org.jruby'
   }
 
+  testRuntime "org.jruby:jruby-complete:$jrubyVersion"
   testRuntime project(':asciidoctorj-pdf')
-  testRuntime 'org.asciidoctor:asciidoctorj-diagram:1.5.4'
+  testRuntime 'org.asciidoctor:asciidoctorj-diagram:2.1.2'
 }
 
 jar.enabled = false

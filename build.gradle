@@ -41,19 +41,19 @@ ext {
   pdfboxVersion = '1.8.16'
 
   // gem versions
-  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '1.5.8.1'
+  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.1'
   asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : project(':asciidoctorj-pdf').version.replace('-', '.')
 
   groovyVersion = '2.1.8'
 
   addressableVersion = '2.4.0'
   public_suffixVersion = '1.4.6'
-  prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.2.2'
+  prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
   rghostGemVersion = '0.9.7'
   rougeGemVersion = '3.26.0'
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
-  ttfunkGemVersion = '1.5.1'
+  ttfunkGemVersion = '1.7.0'
   textHyphenVersion='1.4.1'
 }
 
