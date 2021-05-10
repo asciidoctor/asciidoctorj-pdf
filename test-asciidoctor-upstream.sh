@@ -6,7 +6,7 @@ set -o pipefail
 # show all executed commands in log
 set -x
 
-# This script runs the AsciidoctorJ tests against the specified tag (or master) of the Asciidoctor Ruby gem.
+# This script runs the AsciidoctorJ PDF tests against the specified tag (or main) of the Asciidoctor PDF Ruby gem.
 
 GRADLE_CMD=./gradlew
 # to build against a tag, set TAG to a git tag name (e.g., v1.5.2)
