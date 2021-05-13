@@ -15,9 +15,11 @@ dependencies {
     exclude module: 'addressable'
     exclude module: 'public_suffix'
     exclude module: 'ttfunk'
+    exclude module: 'concurrent-ruby'
   }
+  gems "rubygems:concurrent-ruby:$concurrentRubyVersion"
   gems "rubygems:thread_safe:$threadSafeGemVersion"
-  
+
   gems "rubygems:prawn:$prawnGemVersion"
   gems "rubygems:rghost:$rghostGemVersion"
   gems "rubygems:rouge:$rougeGemVersion"
