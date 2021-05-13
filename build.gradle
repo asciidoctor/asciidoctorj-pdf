@@ -46,7 +46,7 @@ ext {
 
   groovyVersion = '2.1.8'
 
-  addressableVersion = '2.4.0'
+  addressableVersion = '2.7.0'
   concurrentRubyVersion = '1.1.7'
   public_suffixVersion = '1.4.6'
   prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
