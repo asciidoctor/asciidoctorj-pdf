@@ -5,18 +5,34 @@
     we don't need to apply the jruby and bintray plugin on the rootProject.
 */
 buildscript {
-    repositories {
-        jcenter()
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
-    dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
-    }
+    mavenCentral()
+    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+  }
 }
 
 // modern plugins config
 plugins {
+  id "signing"
+  id "io.codearte.nexus-staging" version "0.22.0"
+  id "de.marcphilipp.nexus-publish" version "0.4.0"
   id 'com.github.jruby-gradle.base' version '2.0.0'
+}
+
+apply plugin: 'io.codearte.nexus-staging'
+
+
+nexusStaging {
+  if (project.hasProperty("sonatypeUsername")) {
+    username = project.sonatypeUsername
+  }
+  if (project.hasProperty("sonatypePassword")) {
+    password = project.sonatypePassword
+  }
+  repositoryDescription = "Release ${project.group} ${project.version}"
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version
@@ -70,19 +86,11 @@ subprojects {
   apply plugin: 'groovy'
   apply from: "$rootDir/gradle/providedConfiguration.gradle"
 
-  apply from: rootProject.file('gradle/signing.gradle')
-  if (!it.name.endsWith('itest')) {
-    apply from: rootProject.file('gradle/publish.gradle')
-  }
-  if (statusIsRelease) {
-    apply from: rootProject.file('gradle/deploy.gradle')
-  }
-
   status = _status
 
   // NOTE sourceCompatibility & targetCompatibility are set in gradle.properties to meet requirements of Gradle
   // Must redefine here to work around a bug in the Eclipse plugin
-  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_7
+  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
   plugins.withType(JavaPlugin) {
     project.tasks.withType(JavaCompile) { task ->
@@ -100,7 +108,7 @@ subprojects {
       mavenLocal()
     }
 
-    jcenter()
+    mavenCentral()
   }
 
   dependencies {
@@ -155,6 +163,11 @@ configure(subprojects.findAll {it.name != 'itest'}) {
     }
   }
 
+  java {
+    withJavadocJar()
+    withSourcesJar()
+  }
+
   ext {
     // path to use for the prepared jruby gems
     preparedGems = new File("$buildDir/preparedGems")
@@ -174,6 +187,10 @@ configure(subprojects.findAll { it.name != 'itest'}) {
 
   jruby {
     jrubyVersion = jrubyVersion
+  }
+
+  compileJava {
+    options.release = 8
   }
 
   // QUESTION is this the right place to insert this task dependency in the lifecycle?
