@@ -57,3 +57,8 @@ jrubyPrepare {
     }
   }
 }
+
+ext.publicationName = "mavenAsciidoctorJPdf"
+
+apply from: rootProject.file('gradle/publish.gradle')
+apply from: rootProject.file('gradle/signing.gradle')
