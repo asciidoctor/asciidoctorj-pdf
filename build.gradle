@@ -10,7 +10,7 @@ buildscript {
       url "https://plugins.gradle.org/m2/"
     }
     mavenCentral()
-    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
   }
 }
 
@@ -112,15 +112,14 @@ subprojects {
   }
 
   dependencies {
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
-    testCompile("org.spockframework:spock-core:$spockVersion") {
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrestVersion"
+    testImplementation("org.spockframework:spock-core:$spockVersion") {
       exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
-    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
-    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
-    testCompile "org.jboss.arquillian.spock:arquillian-spock-container:$arquillianSpockVersion"
-
+    testImplementation "org.codehaus.groovy:groovy-all:$groovyVersion"
+    testImplementation "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
+    testImplementation "org.jboss.arquillian.spock:arquillian-spock-container:$arquillianSpockVersion"
   }
 
   test {

@@ -1,9 +1,9 @@
 dependencies {
-  testCompile ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
+  testImplementation ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
     exclude group:'org.jruby'
   }
 
-  testCompile "org.jruby:jruby-complete:$jrubyVersion"
+  testImplementation "org.jruby:jruby-complete:$jrubyVersion"
 
 
   gems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
@@ -28,7 +28,7 @@ dependencies {
   gems "rubygems:text-hyphen:$textHyphenVersion"
   gems "rubygems:ttfunk:$ttfunkGemVersion"
 
-  testCompile "org.apache.pdfbox:pdfbox:$pdfboxVersion"
+  testImplementation "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
 
 def gemFiles = fileTree("${project.buildDir}/.gems") {
