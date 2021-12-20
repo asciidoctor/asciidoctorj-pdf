@@ -57,7 +57,7 @@ ext {
   hamcrestVersion = '2.2'
 
   // gem versions
-  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.1'
+  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.2'
   asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : project(':asciidoctorj-pdf').version.replace('-', '.')
 
   groovyVersion = '2.1.8'

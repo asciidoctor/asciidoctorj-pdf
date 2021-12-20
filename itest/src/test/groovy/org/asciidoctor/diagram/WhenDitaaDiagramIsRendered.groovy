@@ -1,14 +1,13 @@
 package org.asciidoctor.diagram
 
 import org.asciidoctor.Asciidoctor
+import org.asciidoctor.Options
 import org.asciidoctor.OptionsBuilder
 import spock.lang.Specification
 
 class WhenDitaaDiagramIsRendered extends Specification {
 
     static final String ASCIIDOCTOR_DIAGRAM = 'asciidoctor-diagram'
-
-    static final String BUILD_DIR = 'build'
 
     def 'should render ditaa diagram to PDF'() throws Exception {
 
@@ -34,9 +33,10 @@ Hello World
         asciidoctor.requireLibrary(ASCIIDOCTOR_DIAGRAM)
 
         when:
-        asciidoctor.convert(document, OptionsBuilder.options()
+        asciidoctor.convert(document, Options.builder()
                 .toFile(new File(destinationFileName))
-                .backend('pdf'))
+                .backend('pdf')
+                .build())
 
         then:
         new File(destinationFileName).exists()
