@@ -1,4 +1,4 @@
-apply plugin: 'de.marcphilipp.nexus-publish'
+apply plugin: 'maven-publish'
 
 publishing {
     publications.create(project.ext.publicationName, MavenPublication) {
