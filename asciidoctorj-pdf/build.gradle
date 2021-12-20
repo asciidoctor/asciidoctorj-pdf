@@ -37,7 +37,7 @@ def gemFiles = fileTree("${project.buildDir}/.gems") {
   include "gems/*/data/fonts/**"
   include "gems/*/data/themes/**"
   include "gems/asciidoctor-pdf-$asciidoctorPdfGemVersion/data/**"
-  // Accomodate Prawn's non-conforming packaging
+  // Accommodate Prawn's non-conforming packaging
   include "gems/prawn-*/VERSION"
   include "gems/prawn-*/data/*.txt"
   include "gems/prawn-*/data/encodings/*"
