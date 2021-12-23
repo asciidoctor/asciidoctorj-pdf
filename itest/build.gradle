@@ -1,12 +1,12 @@
 dependencies {
 
-  testCompile ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
+  testImplementation ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
     exclude group:'org.jruby'
   }
 
-  testRuntime "org.jruby:jruby-complete:$jrubyVersion"
-  testRuntime project(':asciidoctorj-pdf')
-  testRuntime 'org.asciidoctor:asciidoctorj-diagram:2.1.2'
+  testRuntimeOnly "org.jruby:jruby-complete:$jrubyVersion"
+  testRuntimeOnly project(':asciidoctorj-pdf')
+  testRuntimeOnly 'org.asciidoctor:asciidoctorj-diagram:2.2.1'
 }
 
 jar.enabled = false

@@ -13,14 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 import static org.asciidoctor.OptionsBuilder.options;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class WhenBackendIsPdf {
-
-    public static final String DOCUMENT = "= A document\n\n Test";
 
     private Asciidoctor asciidoctor;
 

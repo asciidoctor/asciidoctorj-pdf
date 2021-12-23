@@ -33,7 +33,7 @@ bintray {
 
     licenses = ['Apache-2.0']
     labels = ['asciidoctor', 'asciidoctorj', 'asciidoc']
-    websiteUrl = 'http://asciidoctor.org/docs/asciidoctorj-pdf'
+    websiteUrl = 'https://github.com/asciidoctor/asciidoctorj-pdf/blob/main/README.adoc'
     issueTrackerUrl = 'https://github.com/asciidoctor/asciidoctorj-pdf/issues'
     vcsUrl = 'https://github.com/asciidoctor/asciidoctorj-pdf'
     publicDownloadNumbers = true
