@@ -31,7 +31,7 @@ public class ImageProcessor extends PDFStreamEngine {
     private static final String INVOKE_OPERATOR = "Do";
 
     private int currentPage = 0;
-    private List<Image> images = new ArrayList<Image>();
+    private List<Image> images = new ArrayList<>();
 
     /**
      * Default constructor
@@ -79,7 +79,7 @@ public class ImageProcessor extends PDFStreamEngine {
         if (INVOKE_OPERATOR.equals(operation)) {
             COSName objectName = (COSName)arguments.get( 0 );
             Map<String, PDXObject> xobjects = getResources().getXObjects();
-            PDXObject xobject = (PDXObject)xobjects.get( objectName.getName() );
+            PDXObject xobject = xobjects.get( objectName.getName() );
 
             if (xobject instanceof PDXObjectImage)  {
                 PDXObjectImage image = (PDXObjectImage)xobject;
@@ -133,7 +133,7 @@ public class ImageProcessor extends PDFStreamEngine {
                 processSubStream( page, pdResources, invoke );
                 
                 // restore the graphics state
-                setGraphicsState( (PDGraphicsState)getGraphicsStack().pop() );
+                setGraphicsState( getGraphicsStack().pop() );
             }
         } else {
             super.processOperator( operator, arguments );

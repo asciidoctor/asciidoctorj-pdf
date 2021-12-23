@@ -29,7 +29,7 @@ cd ../..
 #rm -rf build/maven-pdf
 cd ..
 
-$GRADLE_CMD -S -Pskip.signing -PasciidoctorJVersion=${ASCIIDOCTORJ_VERSION:-2.4.3} \
+$GRADLE_CMD -S -Pskip.signing -PasciidoctorJVersion=${ASCIIDOCTORJ_VERSION:-2.5.2} \
                               -PasciidoctorPdfGemVersion=${ASCIIDOCTOR_PDF_VERSION}-SNAPSHOT \
                               -PprawnGemVersion=${PRAWN_VERSION:-2.4.0} \
                               -PuseMavenLocal=true \
