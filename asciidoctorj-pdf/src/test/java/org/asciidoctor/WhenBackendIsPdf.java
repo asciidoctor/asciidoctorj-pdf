@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static org.asciidoctor.OptionsBuilder.options;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -33,7 +32,7 @@ public class WhenBackendIsPdf {
         File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
         removeFileIfItExists(outputFile1);
 
-        asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
+        asciidoctor.convertFile(inputFile, Options.builder().backend("pdf").safe(SafeMode.UNSAFE).build());
 
         assertThat(outputFile1.exists(), is(true));
         ImageProcessor imageProcessor = new ImageProcessor();
@@ -49,7 +48,7 @@ public class WhenBackendIsPdf {
         File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
         removeFileIfItExists(outputFile1);
 
-        asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
+        asciidoctor.convertFile(inputFile, Options.builder().backend("pdf").safe(SafeMode.UNSAFE).build());
 
         assertThat(outputFile1.exists(), is(true));
 
@@ -72,7 +71,7 @@ public class WhenBackendIsPdf {
         File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
         removeFileIfItExists(outputFile1);
 
-        asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
+        asciidoctor.convertFile(inputFile, Options.builder().backend("pdf").safe(SafeMode.UNSAFE).build());
 
         assertThat(outputFile1.exists(), is(true));
 
@@ -89,7 +88,7 @@ public class WhenBackendIsPdf {
         File outputFile1 = new File(inputFile.getParentFile(), filename + ".pdf");
         removeFileIfItExists(outputFile1);
 
-        asciidoctor.convertFile(inputFile, options().backend("pdf").safe(SafeMode.UNSAFE).get());
+        asciidoctor.convertFile(inputFile, Options.builder().backend("pdf").safe(SafeMode.UNSAFE).build());
 
         assertThat(outputFile1.exists(), is(true));
 

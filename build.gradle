@@ -33,22 +33,16 @@ ext {
   // jar versions
   arquillianVersion = '1.1.10.Final'
   arquillianSpockVersion = '1.0.0.Beta3'
-  commonsioVersion = '2.4'
-  guavaVersion = '18.0'
   jrubyVersion = '9.2.17.0'
-  saxonVersion = '9.5.1-6'
-  xmlMatchersVersion = '1.0-RC1'
   pdfboxVersion = '1.8.16'
   junitVersion = '4.13.2'
   hamcrestVersion = '2.2'
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.2'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : project(':asciidoctorj-pdf').version.replace('-', '.')
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '1.6.1'
 
-  groovyVersion = '2.1.8'
-
-  addressableVersion = '2.7.0'
+  addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
   public_suffixVersion = '1.4.6'
   prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
@@ -100,10 +94,6 @@ subprojects {
   dependencies {
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.hamcrest:hamcrest-library:$hamcrestVersion"
-    testImplementation("org.spockframework:spock-core:$spockVersion") {
-      exclude group: 'org.hamcrest', module: 'hamcrest-core'
-    }
-    testImplementation "org.codehaus.groovy:groovy-all:$groovyVersion"
     testImplementation "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
     testImplementation "org.jboss.arquillian.spock:arquillian-spock-container:$arquillianSpockVersion"
   }
