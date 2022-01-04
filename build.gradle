@@ -40,14 +40,14 @@ ext {
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.2'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '1.6.1'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '1.6.2'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
   public_suffixVersion = '1.4.6'
   prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
   rghostGemVersion = '0.9.7'
-  rougeGemVersion = '3.26.0'
+  rougeGemVersion = '3.27.0'
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
   ttfunkGemVersion = '1.7.0'
@@ -74,12 +74,20 @@ subprojects {
 
   plugins.withType(JavaPlugin) {
     project.tasks.withType(JavaCompile) { task ->
-      task.sourceCompatibility = project.sourceCompatibility
-      task.targetCompatibility = project.targetCompatibility
+      if (JavaVersion.current().isJava11Compatible()) {
+        task.options.release = 8
+      }
+      if (project.hasProperty("showDeprecation")) {
+        options.compilerArgs << "-Xlint:deprecation"
+      }
+      if (project.hasProperty("showUnchecked")) {
+        options.compilerArgs << "-Xlint:unchecked"
+      }
     }
     project.tasks.withType(GroovyCompile) { task ->
-      task.sourceCompatibility = project.sourceCompatibility
-      task.targetCompatibility = project.targetCompatibility
+      if (JavaVersion.current().isJava11Compatible()) {
+        task.options.release = 8
+      }
     }
   }
 
