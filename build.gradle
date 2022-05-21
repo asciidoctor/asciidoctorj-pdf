@@ -18,7 +18,7 @@ buildscript {
 plugins {
   id "signing"
   id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
-  id 'com.github.jruby-gradle.base' version '2.0.0'
+  id 'com.github.jruby-gradle.base' version '2.0.1'
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version
@@ -33,21 +33,21 @@ ext {
   // jar versions
   arquillianVersion = '1.1.10.Final'
   arquillianSpockVersion = '1.0.0.Beta3'
-  jrubyVersion = '9.2.17.0'
+  jrubyVersion = '9.3.4.0'
   pdfboxVersion = '1.8.16'
   junitVersion = '4.13.2'
   hamcrestVersion = '2.2'
 
   // gem versions
-  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.2'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '1.6.2'
+  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.3'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.0.0'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
   public_suffixVersion = '1.4.6'
   prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
   rghostGemVersion = '0.9.7'
-  rougeGemVersion = '3.27.0'
+  rougeGemVersion = '3.28.0'
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
   ttfunkGemVersion = '1.7.0'
