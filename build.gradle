@@ -18,7 +18,7 @@ buildscript {
 plugins {
   id "signing"
   id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
-  id 'com.github.jruby-gradle.base' version '2.0.1'
+  id 'com.github.jruby-gradle.base' version '2.0.0'
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version
@@ -40,7 +40,7 @@ ext {
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.3'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.0.0'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.0.2'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
