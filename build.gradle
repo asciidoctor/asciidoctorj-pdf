@@ -40,7 +40,7 @@ ext {
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.3'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.0.6'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.0.8'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
