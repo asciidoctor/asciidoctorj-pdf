@@ -40,14 +40,14 @@ ext {
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.3'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.1.4'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.1.6'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
   public_suffixVersion = '1.4.6'
   prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
   rghostGemVersion = '0.9.7'
-  rougeGemVersion = '3.28.0'
+  rougeGemVersion = '3.29.0'
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
   ttfunkGemVersion = '1.7.0'
