@@ -33,7 +33,7 @@ ext {
   // jar versions
   arquillianVersion = '1.1.10.Final'
   arquillianSpockVersion = '1.0.0.Beta3'
-  jrubyVersion = '9.3.8.0'
+  jrubyVersion = '9.3.4.0'
   pdfboxVersion = '1.8.16'
   junitVersion = '4.13.2'
   hamcrestVersion = '2.2'
