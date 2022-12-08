@@ -33,14 +33,14 @@ ext {
   // jar versions
   arquillianVersion = '1.1.10.Final'
   arquillianSpockVersion = '1.0.0.Beta3'
-  jrubyVersion = '9.3.4.0'
+  jrubyVersion = '9.4.0.0'
   pdfboxVersion = '1.8.16'
   junitVersion = '4.13.2'
   hamcrestVersion = '2.2'
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.7'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.3.3'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.3.4'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
