@@ -19,6 +19,9 @@
                 <artifactId>gem-maven-plugin</artifactId>
                 <version>1.1.8</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <jrubyVersion>9.3.8.0</jrubyVersion>
+                </configuration>
             </plugin>
         </plugins>
     </build>
