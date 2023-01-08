@@ -51,6 +51,7 @@ ext {
   spockVersion = '0.7-groovy-2.0'
   threadSafeGemVersion = '0.3.6'
   ttfunkGemVersion = '1.7.0'
+  cssParserGemVersion = '1.12.0'
   textHyphenVersion='1.4.1'
 }
 
