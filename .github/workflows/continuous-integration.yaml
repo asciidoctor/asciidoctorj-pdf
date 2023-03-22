@@ -20,9 +20,6 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-        exclude:
-          - os: macos-latest
-            java: '8'
     runs-on: ${{ matrix.os }}
     steps:
       - name: Fetch Sources
@@ -60,4 +57,4 @@ jobs:
         shell: cmd
         run: |
           gradlew.bat -S -Pskip.signing assemble
-          gradlew -S -Pskip.signing check
+          gradlew.bat -S -Pskip.signing check

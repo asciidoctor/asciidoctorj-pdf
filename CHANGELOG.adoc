@@ -1,0 +1,18 @@
+= AsciidoctorJ PDF Changelog
+:url-asciidoctor: http://asciidoctor.org
+:url-asciidoc: {url-asciidoctor}/docs/what-is-asciidoc
+:url-repo: https://github.com/asciidoctor/asciidoctorj-pdf
+:icons: font
+:star: icon:star[role=red]
+ifndef::icons[]
+:star: &#9733;
+endif::[]
+
+This document provides a high-level view of the changes introduced in AsciidoctorJ PDF by release.
+For a detailed view of what has changed, refer to the {url-repo}/commits/main[commit history] on GitHub.
+
+== Unreleased
+
+Improvement::
+
+* Remove 'rouge' gem, already provided by AsciidoctorJ (#87) (@abelsromero)
