@@ -21,7 +21,6 @@ dependencies {
 
   gems "rubygems:prawn:$prawnGemVersion"
   gems "rubygems:rghost:$rghostGemVersion"
-  gems "rubygems:rouge:$rougeGemVersion"
   gems "rubygems:addressable:$addressableVersion"
   gems "rubygems:public_suffix:$public_suffixVersion"
   gems "rubygems:text-hyphen:$textHyphenVersion"
@@ -45,8 +44,6 @@ def gemFiles = fileTree("${project.buildDir}/.gems") {
   include "gems/prawn-icon-*/data/fonts/**"
   // Include required data file from the addressable gem
   include "gems/addressable-*/data/*.data"
-
-  exclude 'gems/rouge-*/lib/rouge/demos/**'
 }
 
 jrubyPrepare {
