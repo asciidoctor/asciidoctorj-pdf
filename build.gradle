@@ -34,13 +34,13 @@ ext {
   arquillianVersion = '1.1.10.Final'
   arquillianSpockVersion = '1.0.0.Beta3'
   jrubyVersion = '9.4.0.0'
-  pdfboxVersion = '1.8.16'
+  pdfboxVersion = '1.8.17'
   junitVersion = '4.13.2'
   hamcrestVersion = '2.2'
 
   // gem versions
   asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.7'
-  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.3.5'
+  asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.3.6'
 
   addressableVersion = '2.8.0'
   concurrentRubyVersion = '1.1.7'
@@ -72,8 +72,8 @@ subprojects {
   // Must redefine here to work around a bug in the Eclipse plugin
   sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
-  plugins.withType(JavaPlugin) {
-    project.tasks.withType(JavaCompile) { task ->
+  plugins.withType(JavaPlugin).configureEach {
+    project.tasks.withType(JavaCompile).configureEach { task ->
       if (JavaVersion.current().isJava11Compatible()) {
         task.options.release = 8
       }
@@ -84,7 +84,7 @@ subprojects {
         options.compilerArgs << "-Xlint:unchecked"
       }
     }
-    project.tasks.withType(GroovyCompile) { task ->
+    project.tasks.withType(GroovyCompile).configureEach { task ->
       if (JavaVersion.current().isJava11Compatible()) {
         task.options.release = 8
       }

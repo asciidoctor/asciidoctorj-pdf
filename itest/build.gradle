@@ -11,6 +11,6 @@ dependencies {
 
 jar.enabled = false
 
-configurations.all {
+configurations.configureEach {
   artifacts.clear()
 }
