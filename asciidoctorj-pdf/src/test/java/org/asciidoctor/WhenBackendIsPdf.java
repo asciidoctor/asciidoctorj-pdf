@@ -1,5 +1,6 @@
 package org.asciidoctor;
 
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.asciidoctor.util.RougeColors;
 import org.asciidoctor.util.pdf.ColorsProcessor;
 import org.asciidoctor.util.pdf.ImageProcessor;
@@ -55,6 +56,7 @@ public class WhenBackendIsPdf {
         ColorsProcessor colorsProcessor = new ColorsProcessor("program", "System.out.println", "printHello", "HelloWorld", "<body>", "else", "Math.sqrt");
         colorsProcessor.parse(outputFile1.getAbsolutePath());
         Map<String, List<Color>> colors = colorsProcessor.getColors();
+
         assertThat(colors.get("program").get(0), equalTo(RougeColors.GREY));
         assertThat(colors.get("System.out.println").get(0), equalTo(RougeColors.LIGHT_BLUE));
         assertThat(colors.get("printHello").get(0), equalTo(RougeColors.DARK_BLUE));
@@ -101,9 +103,8 @@ public class WhenBackendIsPdf {
     private void removeFileIfItExists(File file) throws IOException {
         if (file.exists()) {
             if (!file.delete()) {
-                throw new IOException("can't delete file");
+                throw new IOException("Can't delete file");
             }
         }
     }
-
 }

@@ -7,7 +7,7 @@ import java.awt.*;
  *
  * @author abelsromero
  */
-public class RougeColors {
+public final class RougeColors {
 
     public static final Color GREEN = new Color(0,136,0);
 
