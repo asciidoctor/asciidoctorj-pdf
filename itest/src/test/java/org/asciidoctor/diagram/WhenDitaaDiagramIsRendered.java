@@ -2,20 +2,20 @@ package org.asciidoctor.diagram;
 
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Options;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.io.FileMatchers.anExistingFile;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class WhenDitaaDiagramIsRendered {
+
+class WhenDitaaDiagramIsRendered {
 
     static final String ASCIIDOCTOR_DIAGRAM = "asciidoctor-diagram";
 
     @Test
-    public void should_render_ditaa_diagram_to_PDF() {
+    void should_render_ditaa_diagram_to_PDF() {
 
         final Asciidoctor asciidoctor = Asciidoctor.Factory.create();
 
@@ -40,10 +40,10 @@ public class WhenDitaaDiagramIsRendered {
                 .backend("pdf")
                 .build());
 
-        assertThat(new File(destinationFileName), anExistingFile());
+        assertThat(new File(destinationFileName)).exists();
         File png = new File("build", imageFileName + ".png");
-        assertThat(png, anExistingFile());
+        assertThat(png).exists();
         File pngCache = new File("build/.asciidoctor/diagram/", imageFileName + ".png.cache");
-        assertThat(pngCache, anExistingFile());
+        assertThat(pngCache).exists();
     }
 }

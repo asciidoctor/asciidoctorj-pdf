@@ -5,7 +5,7 @@ package org.asciidoctor.util.pdf;
  *
  * @author abelsromero
  */
-final class Image {
+public final class Image {
 
     // Page where the image is localed
     private final int page;
