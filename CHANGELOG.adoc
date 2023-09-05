@@ -16,3 +16,4 @@ For a detailed view of what has changed, refer to the {url-repo}/commits/main[co
 Improvement::
 
 * Remove 'rouge' gem, already provided by AsciidoctorJ (#87) (@abelsromero)
+* Migrate test to JUnit 5 and AssertJ (#97) (@abelsromero)

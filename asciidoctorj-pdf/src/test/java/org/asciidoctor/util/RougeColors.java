@@ -19,4 +19,6 @@ public final class RougeColors {
 
     public static final Color PINK = new Color(187,0,102);
 
+    public static final Color DARK_CHARCOAL = new Color(51,51,51);
+
 }
