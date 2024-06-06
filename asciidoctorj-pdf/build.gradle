@@ -12,6 +12,7 @@ dependencies {
     exclude module: 'thread_safe'
     exclude module: 'prawn'
     exclude module: 'addressable'
+    exclude module: 'rexml'
     exclude module: 'public_suffix'
     exclude module: 'ttfunk'
     exclude module: 'concurrent-ruby'
@@ -27,6 +28,7 @@ dependencies {
   gems "rubygems:text-hyphen:$textHyphenVersion"
   gems "rubygems:ttfunk:$ttfunkGemVersion"
   gems "rubygems:css_parser:$cssParserGemVersion"
+  gems "rubygems:rexml:$rexmlGemVersion"
 
   testImplementation "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
