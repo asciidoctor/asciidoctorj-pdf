@@ -12,13 +12,19 @@ buildscript {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
   }
+  dependencies {
+    classpath("com.github.jruby-gradle:jruby-gradle-plugin:2.0.1") {
+      exclude module: 'grolifant'
+      exclude module: 'okhttp-digest'
+    }
+    classpath 'org.ysb33r.gradle:grolifant:0.17.0'
+  }
 }
 
 // modern plugins config
 plugins {
   id "signing"
   id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
-  id 'com.github.jruby-gradle.base' version '2.0.0'
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version
