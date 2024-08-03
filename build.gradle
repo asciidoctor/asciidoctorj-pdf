@@ -37,7 +37,7 @@ ext {
   statusIsRelease = (status == 'release')
 
   // jar versions
-  jrubyVersion = '9.4.0.0'
+  jrubyVersion = '9.4.8.0'
   pdfboxVersion = '3.0.0'
   junitVersion = '5.10.0'
   assertjVersion = '3.24.2'
