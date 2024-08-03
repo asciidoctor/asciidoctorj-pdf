@@ -28,7 +28,6 @@ dependencies {
   gems "rubygems:text-hyphen:$textHyphenVersion"
   gems "rubygems:ttfunk:$ttfunkGemVersion"
   gems "rubygems:css_parser:$cssParserGemVersion"
-  gems "rubygems:rexml:$rexmlGemVersion"
 
   testImplementation "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
