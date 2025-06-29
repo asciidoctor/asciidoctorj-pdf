@@ -1,13 +1,12 @@
 dependencies {
-
   testImplementation ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
     exclude group:'org.jruby'
   }
 
   testRuntimeOnly "org.jruby:jruby-complete:$jrubyVersion"
   testRuntimeOnly project(':asciidoctorj-pdf')
-  // TODO: bump 3.0.1
-  testRuntimeOnly 'org.asciidoctor:asciidoctorj-diagram:2.3.2'
+  testRuntimeOnly "org.asciidoctor:asciidoctorj-diagram:3.0.1"
+  testRuntimeOnly "org.asciidoctor:asciidoctorj-diagram-ditaamini:1.0.3"
 }
 
 jar.enabled = false

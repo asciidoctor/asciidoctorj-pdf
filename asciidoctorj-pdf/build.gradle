@@ -47,7 +47,7 @@ dependencies {
   testImplementation "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
 
-def gemFiles = fileTree("${project.buildDir}/.gems") {
+def gemFiles = fileTree("${layout.buildDirectory.get()}/.gems") {
   include 'specifications/*.gemspec'
   include 'gems/*/lib/**'
   include "gems/*/data/fonts/**"
@@ -75,9 +75,9 @@ tasks.named('gemPrepare', JRubyPrepare) {
 
 sourceSets {
   main {
-    //let's register an output folder on the main SourceSet:
+    // Register an output folder on the main SourceSet
+    // It is now a part of the 'main' classpath and will be a part of the jar
     output.dir(preparedGems, builtBy: 'gemPrepare')
-    //it is now a part of the 'main' classpath and will be a part of the jar
   }
 }
 
