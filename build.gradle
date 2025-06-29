@@ -30,12 +30,11 @@ status = project.hasProperty('publishRelease') && project.publishRelease.toBoole
     'release' : ((version == 'unspecified' || version.endsWith('-SNAPSHOT')) ? 'snapshot' : 'release')
 
 ext {
-  buildDateTime = new Date()
-  (buildDateOnly, buildTimeOnly) = new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ').format(buildDateTime).split(' ')
+  (buildDateOnly, buildTimeOnly) = new Date().format('yyyy-MM-dd HH:mm:ss.SSSZ').split(' ')
   statusIsRelease = (status == 'release')
 
   // jar versions
-  jrubyVersion = '10.0.0.1'
+  jrubyVersion = project.hasProperty('jrubyVersion') ? project.jrubyVersion : '10.0.0.1'
   pdfboxVersion = '3.0.0'
   junitVersion = '5.10.0'
   assertjVersion = '3.24.2'
@@ -74,9 +73,6 @@ subprojects {
   status = _status
 
   plugins.withType(JavaPlugin).configureEach {
-
-    def javaVersion = getToolchainVersion()
-
     project.tasks.withType(JavaCompile).configureEach { task ->
       if (project.hasProperty("showDeprecation")) {
         options.compilerArgs << "-Xlint:deprecation"
@@ -84,13 +80,7 @@ subprojects {
       if (project.hasProperty("showUnchecked")) {
         options.compilerArgs << "-Xlint:unchecked"
       }
-      task.options.release = javaVersion
-    }
-
-    java {
-      toolchain {
-        languageVersion = JavaLanguageVersion.of(javaVersion)
-      }
+      task.options.release = 11
     }
   }
 
@@ -98,7 +88,6 @@ subprojects {
     if (project.hasProperty('useMavenLocal') && project.useMavenLocal.toBoolean()) {
       mavenLocal()
     }
-
     mavenCentral()
   }
 
@@ -131,14 +120,6 @@ subprojects {
       }
     }
   }
-}
-
-// TODO update logic to consider JRuby version
-def getToolchainVersion() {
-  if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
-      return 21
-  }
-  return 11
 }
 
 configure(subprojects.findAll {it.name != 'itest'}) {
