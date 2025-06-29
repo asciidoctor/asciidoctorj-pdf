@@ -6,7 +6,8 @@ dependencies {
 
   testRuntimeOnly "org.jruby:jruby-complete:$jrubyVersion"
   testRuntimeOnly project(':asciidoctorj-pdf')
-  testRuntimeOnly 'org.asciidoctor:asciidoctorj-diagram:2.2.1'
+  // TODO: bump 3.0.1
+  testRuntimeOnly 'org.asciidoctor:asciidoctorj-diagram:2.3.2'
 }
 
 jar.enabled = false
