@@ -1,3 +1,10 @@
+import org.ysb33r.gradle.jruby.api.base.tasks.JRubyPrepare
+
+ext {
+  // path to use for the prepared jruby gems
+  preparedGems = new File("${layout.buildDirectory.get()}/preparedGems")
+}
+
 dependencies {
   testImplementation ("org.asciidoctor:asciidoctorj:$asciidoctorJVersion") {
     exclude group:'org.jruby'
@@ -5,8 +12,7 @@ dependencies {
 
   testImplementation "org.jruby:jruby-complete:$jrubyVersion"
 
-
-  gems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
+  runtimeGems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
     // Exclude gems provided by AsciidoctorJ core
     exclude module: 'asciidoctor'
     exclude module: 'thread_safe'
@@ -17,22 +23,22 @@ dependencies {
     exclude module: 'ttfunk'
     exclude module: 'concurrent-ruby'
   }
-  gems "rubygems:concurrent-ruby:$concurrentRubyVersion"
-  gems "rubygems:thread_safe:$threadSafeGemVersion"
+  runtimeGems "rubygems:concurrent-ruby:$concurrentRubyVersion"
+  runtimeGems "rubygems:thread_safe:$threadSafeGemVersion"
 
-  gems "rubygems:prawn:$prawnGemVersion"
-  gems "rubygems:prawn-svg:$prawnSvgGemVersion"
-  gems "rubygems:rghost:$rghostGemVersion"
-  gems "rubygems:addressable:$addressableVersion"
-  gems "rubygems:public_suffix:$public_suffixVersion"
-  gems "rubygems:text-hyphen:$textHyphenVersion"
-  gems "rubygems:ttfunk:$ttfunkGemVersion"
-  gems "rubygems:css_parser:$cssParserGemVersion"
+  runtimeGems "rubygems:prawn:$prawnGemVersion"
+  runtimeGems "rubygems:prawn-svg:$prawnSvgGemVersion"
+  runtimeGems "rubygems:rghost:$rghostGemVersion"
+  runtimeGems "rubygems:addressable:$addressableVersion"
+  runtimeGems "rubygems:public_suffix:$public_suffixVersion"
+  runtimeGems "rubygems:text-hyphen:$textHyphenVersion"
+  runtimeGems "rubygems:ttfunk:$ttfunkGemVersion"
+  runtimeGems "rubygems:css_parser:$cssParserGemVersion"
 
   testImplementation "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
 
-def gemFiles = fileTree("${project.buildDir}/.gems") {
+def gemFiles = fileTree("${layout.buildDirectory.get()}/.gems") {
   include 'specifications/*.gemspec'
   include 'gems/*/lib/**'
   include "gems/*/data/fonts/**"
@@ -48,12 +54,21 @@ def gemFiles = fileTree("${project.buildDir}/.gems") {
   include "gems/addressable-*/data/*.data"
 }
 
-jrubyPrepare {
+tasks.named('gemPrepare', JRubyPrepare) {
+  gemConfiguration = configurations.runtimeGems
   doLast {
     copy { // bundles the gems inside this artifact
       from gemFiles
       into preparedGems
     }
+  }
+}
+
+sourceSets {
+  main {
+    // Register an output folder on the main SourceSet
+    // It is now a part of the 'main' classpath and will be a part of the jar
+    output.dir(preparedGems, builtBy: 'gemPrepare')
   }
 }
 

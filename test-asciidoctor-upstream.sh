@@ -31,9 +31,9 @@ cd ..
 
 unset GEM_PATH GEM_HOME JRUBY_OPTS
 
-$GRADLE_CMD -S -Pskip.signing -PasciidoctorJVersion=${ASCIIDOCTORJ_VERSION:-2.5.2} \
+$GRADLE_CMD -S -Pskip.signing -PasciidoctorJVersion=${ASCIIDOCTORJ_VERSION:-3.0.0} \
                               -PasciidoctorPdfGemVersion=${ASCIIDOCTOR_PDF_VERSION}-SNAPSHOT \
-                              -PprawnGemVersion=${PRAWN_VERSION:-2.4.0} \
+                              -PprawnGemVersion=${PRAWN_VERSION:-2.5.0} \
                               -PuseMavenLocal=true \
                               --no-daemon \
                               :asciidoctorj-pdf:clean :asciidoctorj-pdf:check

@@ -1,3 +1,5 @@
+import java.time.Duration
+
 /*
     adding the plugin jars to the classpath to apply them later.
     currently the new plugins DSL does apply them directly.
@@ -13,11 +15,8 @@ buildscript {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
   }
   dependencies {
-    classpath("com.github.jruby-gradle:jruby-gradle-plugin:2.0.1") {
-      exclude module: 'grolifant'
-      exclude module: 'okhttp-digest'
-    }
-    classpath 'org.ysb33r.gradle:grolifant:0.17.0'
+    classpath 'org.ysb33r.jruby.base:org.ysb33r.jruby.base.gradle.plugin:2.0.0'
+    classpath 'org.ysb33r.jruby.resolver:org.ysb33r.jruby.resolver.gradle.plugin:2.0.0'
   }
 }
 
@@ -32,29 +31,28 @@ status = project.hasProperty('publishRelease') && project.publishRelease.toBoole
     'release' : ((version == 'unspecified' || version.endsWith('-SNAPSHOT')) ? 'snapshot' : 'release')
 
 ext {
-  buildDateTime = new Date()
-  (buildDateOnly, buildTimeOnly) = new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ').format(buildDateTime).split(' ')
+  (buildDateOnly, buildTimeOnly) = new Date().format('yyyy-MM-dd HH:mm:ss.SSSZ').split(' ')
   statusIsRelease = (status == 'release')
 
   // jar versions
-  jrubyVersion = '9.4.8.0'
+  jrubyVersion = project.hasProperty('jrubyVersion') ? project.jrubyVersion : '10.0.0.1'
   pdfboxVersion = '3.0.0'
   junitVersion = '5.10.0'
   assertjVersion = '3.24.2'
 
   // gem versions
-  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.7'
+  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '3.0.0'
   asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.3.19'
 
-  addressableVersion = '2.8.0'
-  concurrentRubyVersion = '1.1.7'
+  addressableVersion = '2.8.7'
+  concurrentRubyVersion = '1.1.10'
   public_suffixVersion = '1.4.6'
-  prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
-  prawnSvgGemVersion = "0.34.1"
-  rghostGemVersion = '0.9.7'
+  prawnGemVersion = project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
+  prawnSvgGemVersion = "0.34.2"
+  rghostGemVersion = '0.9.9'
   threadSafeGemVersion = '0.3.6'
   ttfunkGemVersion = '1.7.0'
-  cssParserGemVersion = '1.12.0'
+  cssParserGemVersion = '1.21.1'
   textHyphenVersion='1.4.1'
 }
 
@@ -68,29 +66,17 @@ subprojects {
   def _status = status
   apply plugin: 'java'
   apply from: "$rootDir/gradle/providedConfiguration.gradle"
-
   status = _status
-
-  // NOTE sourceCompatibility & targetCompatibility are set in gradle.properties to meet requirements of Gradle
-  // Must redefine here to work around a bug in the Eclipse plugin
-  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
   plugins.withType(JavaPlugin).configureEach {
     project.tasks.withType(JavaCompile).configureEach { task ->
-      if (JavaVersion.current().isJava11Compatible()) {
-        task.options.release = 8
-      }
       if (project.hasProperty("showDeprecation")) {
         options.compilerArgs << "-Xlint:deprecation"
       }
       if (project.hasProperty("showUnchecked")) {
         options.compilerArgs << "-Xlint:unchecked"
       }
-    }
-    project.tasks.withType(GroovyCompile).configureEach { task ->
-      if (JavaVersion.current().isJava11Compatible()) {
-        task.options.release = 8
-      }
+      task.options.release = 11
     }
   }
 
@@ -98,7 +84,6 @@ subprojects {
     if (project.hasProperty('useMavenLocal') && project.useMavenLocal.toBoolean()) {
       mavenLocal()
     }
-
     mavenCentral()
   }
 
@@ -131,21 +116,27 @@ subprojects {
       }
     }
   }
-
 }
 
 configure(subprojects.findAll {it.name != 'itest'}) {
   apply from: rootProject.file('gradle/versioncheck.gradle')
 
-  apply plugin: 'com.github.jruby-gradle.base'
+  apply plugin: 'org.ysb33r.jruby.resolver'
+  apply plugin: 'org.ysb33r.jruby.base'
 
   repositories {
     ruby.gems()
   }
 
+  configurations {
+    runtimeGems {
+      canBeResolved(true)
+    }
+  }
+
   if (JavaVersion.current().isJava8Compatible()) {
     javadoc {
-      // Oracle JDK8 likes to fail the build over spoiled HTML
+      // Oracle JDK11+ likes to fail the build over spoiled HTML
       options.addStringOption('Xdoclint:none', '-quiet')
     }
   }
@@ -154,35 +145,6 @@ configure(subprojects.findAll {it.name != 'itest'}) {
     withJavadocJar()
     withSourcesJar()
   }
-
-  ext {
-    // path to use for the prepared jruby gems
-    preparedGems = new File("$buildDir/preparedGems")
-  }
-
-  sourceSets {
-    main {
-      //let's register an output folder on the main SourceSet:
-      output.dir(preparedGems, builtBy: 'jrubyPrepare')
-      //it is now a part of the 'main' classpath and will be a part of the jar
-    }
-  }
-
-}
-
-configure(subprojects.findAll { it.name != 'itest'}) {
-
-  jruby {
-    jrubyVersion = jrubyVersion
-  }
-
-  compileJava {
-    options.release = 8
-  }
-
-  // QUESTION is this the right place to insert this task dependency in the lifecycle?
-  // IMPORTANT The TMP or TEMP environment variable must be set for the gem install command to work on Windows
-  processResources.dependsOn jrubyPrepare
 }
 
 nexusPublishing {
