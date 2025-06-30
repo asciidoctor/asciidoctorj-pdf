@@ -24,17 +24,9 @@ jobs:
           - 9.4.13.0
           - 10.0.0.1
         exclude:
-          - os: ubuntu-latest
-            java: 11
+          - java: 11
             jrubyVersion: 10.0.0.1
-          - os: ubuntu-latest
-            java: 17
-            jrubyVersion: 10.0.0.1
-          - os: macos-latest
-            java: 11
-            jrubyVersion: 10.0.0.1
-          - os: macos-latest
-            java: 17
+          - java: 17
             jrubyVersion: 10.0.0.1
     runs-on: ${{ matrix.os }}
     steps:
