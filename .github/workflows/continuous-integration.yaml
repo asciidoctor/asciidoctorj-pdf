@@ -11,49 +11,75 @@ jobs:
   build:
     name: Build
     strategy:
-      max-parallel: 2
+      max-parallel: 8
       matrix:
-        java:
-          - '11'
-          - '17'
         os:
           - ubuntu-latest
-          - macos-13
+          - macos-latest
+        java:
+          - 11
+          - 17
+          - 21
+        jrubyVersion:
+          - 9.4.13.0
+          - 10.0.0.1
+        exclude:
+          - os: ubuntu-latest
+            java: 11
+            jrubyVersion: 10.0.0.1
+          - os: ubuntu-latest
+            java: 17
+            jrubyVersion: 10.0.0.1
+          - os: macos-latest
+            java: 11
+            jrubyVersion: 10.0.0.1
+          - os: macos-latest
+            java: 17
+            jrubyVersion: 10.0.0.1
     runs-on: ${{ matrix.os }}
     steps:
       - name: Fetch Sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-      - name: Build
+      - name: Build & Test
         run: |
-          ./gradlew -S -Pskip.signing assemble
-          ./gradlew -S -Pskip.signing check
+          ./gradlew -S -PjrubyVersion=${{ matrix.jRubyVersion }} -Pskip.signing assemble check
   build-windows:
-    name: Build on Windows
-    runs-on: windows-latest
+    name: Build
     strategy:
       fail-fast: false
       max-parallel: 2
       matrix:
+        os:
+          - windows-latest
         java:
-          - '11'
-          - '17'
+          - 11
+          - 17
+          - 21
+        jrubyVersion:
+          - 9.4.13.0
+          - 10.0.0.1
+        exclude:
+          - java: 11
+            jrubyVersion: 10.0.0.1
+          - java: 17
+            jrubyVersion: 10.0.0.1
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Fetch Sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-      - name: Assemble
+      - name: Build & Test
         shell: cmd
         run: |
-          gradlew.bat -S -Pskip.signing assemble
-          gradlew.bat -S -Pskip.signing check
+          gradlew.bat -S -PjrubyVersion=${{ matrix.jRubyVersion }} -Pskip.signing assemble check
