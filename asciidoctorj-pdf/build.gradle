@@ -24,11 +24,15 @@ dependencies {
   runtimeGems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
     // Exclude gems provided by AsciidoctorJ core
     exclude module: 'asciidoctor'
+    exclude module: 'matrix'
     exclude module: 'thread_safe'
     exclude module: 'prawn'
+    exclude module: 'prawn-table'
+    exclude module: 'prawn-templates'
     exclude module: 'addressable'
     exclude module: 'rexml'
     exclude module: 'public_suffix'
+    exclude module: 'treetop'
     exclude module: 'ttfunk'
     exclude module: 'concurrent-ruby'
   }
@@ -36,12 +40,16 @@ dependencies {
   runtimeGems "rubygems:thread_safe:$threadSafeGemVersion"
 
   runtimeGems "rubygems:afm:$afmGemVersion"
+  runtimeGems "rubygems:matrix:$matrixGemVersion"
   runtimeGems "rubygems:prawn:$prawnGemVersion"
   runtimeGems "rubygems:prawn-svg:$prawnSvgGemVersion"
+  runtimeGems "rubygems:prawn-table:$prawnTableGemVersion"
+  runtimeGems "rubygems:prawn-templates:$prawnTemplatesGemVersion"
   runtimeGems "rubygems:rghost:$rghostGemVersion"
   runtimeGems "rubygems:addressable:$addressableVersion"
   runtimeGems "rubygems:public_suffix:$public_suffixVersion"
   runtimeGems "rubygems:text-hyphen:$textHyphenVersion"
+  runtimeGems "rubygems:treetop:$treetopGemVersion"
   runtimeGems "rubygems:ttfunk:$ttfunkGemVersion"
   runtimeGems "rubygems:css_parser:$cssParserGemVersion"
 
