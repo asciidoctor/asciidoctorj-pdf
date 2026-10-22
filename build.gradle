@@ -35,9 +35,11 @@ ext {
   statusIsRelease = (status == 'release')
 
   // jar versions
-  // NOTE JRuby 10.1.2.0 cannot be used: its jruby-stdlib bundles psych 5.5.0 (previously 5.3.1) whose BOM pre-pass
-  // relies on IO#pos/IO#seek, which are broken for uri:classloader: resources, so YAML files packaged in the jar
-  // (e.g., prawn-icon's shims.yml) are read from the wrong offset. Fixed in JRuby 10.1.3.0.
+  // NOTE This version is only used to run the tests, the published artifact does not depend on JRuby:
+  // at runtime, the bundled gems are loaded by the JRuby version provided by AsciidoctorJ (or the user).
+  // JRuby 10.1.2.0 is not supported at runtime: its jruby-stdlib bundles psych 5.5.0 (previously 5.3.1) whose BOM
+  // pre-pass relies on IO#pos/IO#seek, which are broken for uri:classloader: resources, so YAML files packaged in
+  // the jar (e.g., prawn-icon's shims.yml) are read from the wrong offset. Fixed in JRuby 10.1.3.0.
   // See https://github.com/jruby/jruby/issues/9727
   jrubyVersion = project.hasProperty('jrubyVersion') ? project.jrubyVersion : '10.1.1.0'
   pdfboxVersion = '3.0.0'

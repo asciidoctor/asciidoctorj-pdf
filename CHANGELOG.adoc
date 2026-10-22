@@ -17,3 +17,8 @@ Improvement::
 
 * Remove 'rouge' gem, already provided by AsciidoctorJ (#87) (@abelsromero)
 * Migrate test to JUnit 5 and AssertJ (#97) (@abelsromero)
+* Support JRuby 10 (#110) (@abelsromero)
+
+Known issues::
+
+* JRuby 10.1.2.0 is not supported: psych 5.5.0 fails to read YAML files packaged in a jar, use JRuby 10.1.1.0 or 10.1.3.0+ (https://github.com/jruby/jruby/issues/9727[jruby/jruby#9727])
