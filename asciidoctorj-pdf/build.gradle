@@ -1,16 +1,8 @@
-apply plugin: 'org.ysb33r.jruby.base'
-apply plugin: 'org.ysb33r.jruby.resolver'
-
 import org.ysb33r.gradle.jruby.api.base.tasks.JRubyPrepare
 
-repositories {
-    ruby.gems()
-}
-
-configurations {
-    runtimeGems {
-        canBeResolved(true)
-    }
+ext {
+  // path to use for the prepared jruby gems
+  preparedGems = new File("${layout.buildDirectory.get()}/preparedGems")
 }
 
 dependencies {
@@ -19,7 +11,6 @@ dependencies {
   }
 
   testImplementation "org.jruby:jruby-complete:$jrubyVersion"
-
 
   runtimeGems("rubygems:asciidoctor-pdf:$asciidoctorPdfGemVersion") {
     // Exclude gems provided by AsciidoctorJ core
@@ -56,7 +47,7 @@ dependencies {
   testImplementation "org.apache.pdfbox:pdfbox:$pdfboxVersion"
 }
 
-def gemFiles = fileTree("${project.buildDir}/.gems") {
+def gemFiles = fileTree("${layout.buildDirectory.get()}/.gems") {
   include 'specifications/*.gemspec'
   include 'gems/*/lib/**'
   include "gems/*/data/fonts/**"
@@ -73,18 +64,21 @@ def gemFiles = fileTree("${project.buildDir}/.gems") {
 }
 
 tasks.named('gemPrepare', JRubyPrepare) {
-    gemConfiguration = configurations.runtimeGems
-    doLast {
-        copy { // bundles the gems inside this artifact
-            from gemFiles
-            into preparedGems
-        }
+  gemConfiguration = configurations.runtimeGems
+  doLast {
+    copy { // bundles the gems inside this artifact
+      from gemFiles
+      into preparedGems
     }
+  }
 }
 
-ext {
-    // path to use for the prepared jruby gems
-    preparedGems = new File("$buildDir/preparedGems")
+sourceSets {
+  main {
+    // Register an output folder on the main SourceSet
+    // It is now a part of the 'main' classpath and will be a part of the jar
+    output.dir(preparedGems, builtBy: 'gemPrepare')
+  }
 }
 
 ext.publicationName = "mavenAsciidoctorJPdf"

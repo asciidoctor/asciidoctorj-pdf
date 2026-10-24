@@ -1,3 +1,5 @@
+import java.time.Duration
+
 /*
     adding the plugin jars to the classpath to apply them later.
     currently the new plugins DSL does apply them directly.
@@ -19,8 +21,8 @@ plugins {
   id "signing"
   id "io.github.gradle-nexus.publish-plugin" version "2.0.0"
 
-  id 'org.ysb33r.jruby.resolver'    version '2.0.0'
-  id 'org.ysb33r.jruby.base' version '2.0.0'
+  id 'org.ysb33r.jruby.resolver' version '2.0.0' apply false
+  id 'org.ysb33r.jruby.base' version '2.0.0' apply false
 }
 
 // TIP use -PpublishRelease=true to active release behavior regardless of the version
@@ -33,25 +35,31 @@ ext {
   statusIsRelease = (status == 'release')
 
   // jar versions
-  jrubyVersion = '9.4.14.0'
+  // NOTE This version is only used to run the tests, the published artifact does not depend on JRuby:
+  // at runtime, the bundled gems are loaded by the JRuby version provided by AsciidoctorJ (or the user).
+  // JRuby 10.1.2.0 is not supported at runtime: its jruby-stdlib bundles psych 5.5.0 (previously 5.3.1) whose BOM
+  // pre-pass relies on IO#pos/IO#seek, which are broken for uri:classloader: resources, so YAML files packaged in
+  // the jar (e.g., prawn-icon's shims.yml) are read from the wrong offset. Fixed in JRuby 10.1.3.0.
+  // See https://github.com/jruby/jruby/issues/9727
+  jrubyVersion = project.hasProperty('jrubyVersion') ? project.jrubyVersion : '10.1.1.0'
   pdfboxVersion = '3.0.0'
   junitVersion = '5.10.0'
   assertjVersion = '3.24.2'
 
   // gem versions
-  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '2.5.7'
+  asciidoctorJVersion = project.hasProperty('asciidoctorJVersion') ? project.asciidoctorJVersion : '3.0.1'
   asciidoctorPdfGemVersion = project.hasProperty('asciidoctorPdfGemVersion') ? project.asciidoctorPdfGemVersion : '2.3.27'
 
   afmGemVersion = '0.2.2'
-  addressableVersion = '2.8.0'
+  addressableVersion = '2.8.7'
   concurrentRubyVersion = '1.3.5'
   matrixGemVersion = "0.4.3"
   public_suffixVersion = '1.4.6'
-  prawnGemVersion=project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
+  prawnGemVersion = project.hasProperty('prawnGemVersion') ? project.prawnGemVersion : '2.4.0'
   prawnSvgGemVersion = "0.34.2"
   prawnTableGemVersion = "0.2.2"
   prawnTemplatesGemVersion = "0.1.2"
-  rghostGemVersion = '0.9.7'
+  rghostGemVersion = '0.9.9'
   threadSafeGemVersion = '0.3.6'
   treetopGemVersion = '1.6.18'
   ttfunkGemVersion = '1.7.0'
@@ -69,29 +77,17 @@ subprojects {
   def _status = status
   apply plugin: 'java'
   apply from: "$rootDir/gradle/providedConfiguration.gradle"
-
   status = _status
-
-  // NOTE sourceCompatibility & targetCompatibility are set in gradle.properties to meet requirements of Gradle
-  // Must redefine here to work around a bug in the Eclipse plugin
-  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
   plugins.withType(JavaPlugin).configureEach {
     project.tasks.withType(JavaCompile).configureEach { task ->
-      if (JavaVersion.current().isJava11Compatible()) {
-        task.options.release = 8
-      }
       if (project.hasProperty("showDeprecation")) {
         options.compilerArgs << "-Xlint:deprecation"
       }
       if (project.hasProperty("showUnchecked")) {
         options.compilerArgs << "-Xlint:unchecked"
       }
-    }
-    project.tasks.withType(GroovyCompile).configureEach { task ->
-      if (JavaVersion.current().isJava11Compatible()) {
-        task.options.release = 8
-      }
+      task.options.release = 11
     }
   }
 
@@ -99,7 +95,6 @@ subprojects {
     if (project.hasProperty('useMavenLocal') && project.useMavenLocal.toBoolean()) {
       mavenLocal()
     }
-
     mavenCentral()
   }
 
@@ -132,15 +127,27 @@ subprojects {
       }
     }
   }
-
 }
 
 configure(subprojects.findAll {it.name != 'itest'}) {
   apply from: rootProject.file('gradle/versioncheck.gradle')
 
+  apply plugin: 'org.ysb33r.jruby.resolver'
+  apply plugin: 'org.ysb33r.jruby.base'
+
+  repositories {
+    ruby.gems()
+  }
+
+  configurations {
+    runtimeGems {
+      canBeResolved(true)
+    }
+  }
+
   if (JavaVersion.current().isJava8Compatible()) {
     javadoc {
-      // Oracle JDK8 likes to fail the build over spoiled HTML
+      // Oracle JDK11+ likes to fail the build over spoiled HTML
       options.addStringOption('Xdoclint:none', '-quiet')
     }
   }
@@ -148,31 +155,6 @@ configure(subprojects.findAll {it.name != 'itest'}) {
   java {
     withJavadocJar()
     withSourcesJar()
-  }
-
-  ext {
-    // path to use for the prepared jruby gems
-    preparedGems = new File("$buildDir/preparedGems")
-  }
-
-  sourceSets {
-    main {
-      //let's register an output folder on the main SourceSet:
-      output.dir(preparedGems, builtBy: 'gemPrepare')
-      //it is now a part of the 'main' classpath and will be a part of the jar
-    }
-  }
-
-}
-
-configure(subprojects.findAll { it.name != 'itest'}) {
-
-  jruby {
-    jrubyVersion = jrubyVersion
-  }
-
-  compileJava {
-    options.release = 8
   }
 }
 
