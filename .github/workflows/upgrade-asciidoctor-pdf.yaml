@@ -1,0 +1,53 @@
+name: Upgrade Asciidoctor PDF
+on:
+  # GitHub can disable scheduled builds in repositories without recent activity
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upgrade-asciidoctor-pdf
+
+jobs:
+  upgrade:
+    name: Create upgrade pull request
+    runs-on: ubuntu-latest
+    env:
+      # If github.token creates the pull request, you must manually approve its CI run.
+      # To prevent this, you can add an optional UPGRADE_TOKEN secret with a personal access token.
+      GH_TOKEN: ${{ secrets.UPGRADE_TOKEN || github.token }}
+      # Without this, 'gh' in a fork can open the pull request in the parent repository
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          token: ${{ env.GH_TOKEN }}
+      - name: Update versions
+        id: update
+        run: .github/scripts/upgrade-asciidoctor-pdf.sh "$RUNNER_TEMP/pr-body.md"
+      - name: Create pull request
+        if: steps.update.outputs.version
+        env:
+          VERSION: ${{ steps.update.outputs.version }}
+        run: |
+          branch="upgrade-$VERSION"
+          # A closed pull request also counts, to not open again a rejected upgrade
+          existing=$(gh pr list --state all --head "$branch" --json number --jq length)
+          if [ "$existing" != "0" ]; then
+            echo "A pull request for the '$branch' branch exists"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$branch"
+          git commit -am "Upgrade to asciidoctor-pdf $VERSION"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Upgrade to asciidoctor-pdf $VERSION" \
+            --body-file "$RUNNER_TEMP/pr-body.md"
